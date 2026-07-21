@@ -65,6 +65,7 @@ const categories = [
   "Açık Bankacılık ve FinTech",
   "Bankacılık Ürünleri",
   "Kredi Riski",
+  "Risk Yönetimi",
   "Piyasa Riski",
   "Likidite Riski",
   "Operasyonel Risk",
@@ -110,6 +111,18 @@ const curatedTerms = [
 ];
 
 const domainGroups = {
+  "Bankacılık Ürünleri": [
+    "Mevduat Hesabı",
+    "Kredi Kartı",
+    "Ticari Kredi",
+    "Bireysel Kredi",
+    "Konut Kredisi",
+    "Taşıt Kredisi",
+    "Teminat Mektubu",
+    "POS Ürünü",
+    "Dijital Bankacılık",
+    "Yatırım Hesabı",
+  ],
   "Kredi Riski": [
     "Bireysel Kredi",
     "Konut Kredisi",
@@ -127,6 +140,16 @@ const domainGroups = {
     "Gayrinakdi Kredi",
     "Teminat Mektubu",
     "Kredi Portföyü",
+  ],
+  "Risk Yönetimi": [
+    "Risk İştahı",
+    "Limit Yapısı",
+    "Stres Testi",
+    "Senaryo Analizi",
+    "Duyarlılık Analizi",
+    "Erken Uyarı",
+    "Model Validasyonu",
+    "Portföy İzleme",
   ],
   "Piyasa Riski": [
     "Döviz Pozisyonu",
@@ -235,8 +258,8 @@ const domainGroups = {
     "Kişisel Veri",
     "Uyum Kontrolü",
     "İç Kontrol",
-    "Denetim Bulgusu",
-    "Politika Dokümanı",
+    "Uyum Bulgusu",
+    "Uyum Programı",
     "Limit Aşımı",
     "Raporlama Yükümlülüğü",
   ],
@@ -256,17 +279,140 @@ const domainGroups = {
   ],
 };
 
-const metricTemplates = [
-  ["Oranı", "ilgili başlığın toplam büyüklük içindeki payını veya gerçekleşme düzeyini gösteren karşılaştırılabilir bir göstergedir"],
-  ["Tutarı", "ilgili başlık kapsamında ölçülen parasal büyüklüğü ifade eder ve dönemsel izleme için kullanılır"],
-  ["Bakiyesi", "raporlama tarihi itibarıyla kalan stok büyüklüğü gösterir"],
-  ["Riski", "ilgili alanda zarar, sapma veya uyumsuzluk doğurma ihtimalini anlatır"],
-  ["Analizi", "ilgili başlığın nedenlerini, etkilerini ve eğilimini değerlendiren çalışmadır"],
-  ["Yönetimi", "ilgili risk veya finansal büyüklüğün politika, limit ve kontrollerle izlenmesini kapsar"],
-  ["Stres Testi", "olumsuz senaryolar altında ilgili kalemin dayanıklılığını ölçen çalışmadır"],
-  ["Duyarlılık Analizi", "tek bir varsayım değiştiğinde ilgili finansal sonucun nasıl değiştiğini gösterir"],
-  ["Erken Uyarı Göstergesi", "bozulma veya olağan dışı hareketleri gerçekleşmeden önce yakalamaya çalışan izleme sinyalidir"],
-];
+const categoryMetricTemplates = {
+  "Bankacılık Ürünleri": [
+    ["Tanımı", "müşteri ihtiyacını karşılayan bankacılık ürününün kapsamını ve temel kullanım amacını açıklar"],
+    ["Gelir Etkisi", "ürünün faiz, ücret, komisyon veya hacim üzerinden finansal sonuca katkısını gösterir"],
+    ["Risk Profili", "ürünün kredi, piyasa, likidite veya operasyonel risk boyutunu değerlendirir"],
+    ["Müşteri Segmenti", "ürünün hangi müşteri grubu için uygun olduğunu tanımlar"],
+    ["Limit Yapısı", "ürün özelinde tanımlanan kullanım veya tahsis sınırlarını gösterir"],
+    ["Uyum Kontrolü", "ürünün mevzuat ve kurum politikalarına uygunluğunu izler"],
+    ["Performans Göstergesi", "ürünün hacim, kârlılık veya kullanım başarısını takip eden metriktir"],
+  ],
+  "Kredi Riski": [
+    ["Bakiyesi", "raporlama tarihinde canlı veya izlenen kredi stoğunu gösterir"],
+    ["Limit Kullanım Oranı", "tanımlı limitin ne kadarının kullanıldığını ölçer"],
+    ["PD", "ilgili segmentin belirli vadede temerrüde düşme olasılığını ifade eder"],
+    ["LGD", "temerrüt halinde tahsil edilemeyebilecek kısmı oransal olarak gösterir"],
+    ["EAD", "temerrüt anında beklenen risk bakiyesini anlatır"],
+    ["ECL", "PD, LGD ve EAD bileşenleriyle beklenen kredi zararını hesaplar"],
+    ["NPL Oranı", "takipteki alacakların ilgili kredi portföyüne oranını verir"],
+    ["Gecikme Gün Sayısı", "vadesi geçen ödeme için geçen gün sayısını gösterir"],
+    ["Teminat Karşılama Oranı", "teminat değerinin risk tutarını ne ölçüde karşıladığını izler"],
+    ["Erken Uyarı Sinyali", "ödeme gücü veya davranış bozulmasını önceden yakalamaya çalışır"],
+    ["Stres Testi", "olumsuz makro veya portföy senaryosunda kredi kaybı etkisini ölçer"],
+    ["Validasyonu", "model, veri ve hesaplama sonuçlarının tutarlılığını bağımsız biçimde kontrol eder"],
+  ],
+  "Risk Yönetimi": [
+    ["Çerçevesi", "riskin tanımlanması, ölçülmesi, izlenmesi ve raporlanması için kullanılan genel yapıyı ifade eder"],
+    ["Limit Kontrolü", "belirlenen eşiklere göre risk kullanımını ve aşım durumunu izler"],
+    ["Raporlaması", "risk göstergelerinin yönetim ve ilgili komitelere düzenli sunumunu sağlar"],
+    ["Aksiyon Planı", "tespit edilen risk veya bulgu için alınacak düzeltici adımları tanımlar"],
+    ["Stres Testi", "ağır fakat makul senaryolarda finansal dayanıklılığı ölçer"],
+    ["Duyarlılık Analizi", "varsayım değişikliklerinin sonuçlar üzerindeki etkisini değerlendirir"],
+    ["Validasyonu", "model, yöntem veya raporlama çıktısının bağımsız kontrolünü ifade eder"],
+  ],
+  "Piyasa Riski": [
+    ["Pozisyonu", "ilgili risk faktörüne açık net veya brüt finansal büyüklüğü gösterir"],
+    ["VaR", "belirli güven düzeyi ve elde tutma süresi için beklenen azami kaybı tahmin eder"],
+    ["Stres Kaybı", "olağan dışı fiyat, faiz veya kur hareketinde oluşabilecek zararı gösterir"],
+    ["Duyarlılığı", "risk faktöründeki küçük değişimin portföy değerine etkisini ölçer"],
+    ["Limit Kullanımı", "tanımlı piyasa riski limitinin ne kadar kullanıldığını izler"],
+    ["Volatilitesi", "fiyat veya getiri oynaklığının seviyesini gösterir"],
+    ["Getiri Etkisi", "ilgili pozisyonun dönemsel kâr-zarar üzerindeki katkısını anlatır"],
+    ["Risk Primi", "belirsizlik veya kredi kalitesi için talep edilen ek getiriyi ifade eder"],
+    ["Hedge Etkinliği", "korunma işleminin risk azaltma başarısını değerlendirir"],
+    ["Senaryo Analizi", "alternatif piyasa koşullarında portföy sonucunu karşılaştırır"],
+    ["Backtest Sonucu", "model tahmini ile gerçekleşen kayıp arasındaki uyumu kontrol eder"],
+  ],
+  "Likidite Riski": [
+    ["Vade Profili", "nakit giriş ve çıkışların vadeye göre dağılımını gösterir"],
+    ["Nakit Akımı", "belirli dönemde beklenen giriş ve çıkışları takip eder"],
+    ["Karşılama Oranı", "likit kaynakların beklenen nakit ihtiyacını ne ölçüde karşıladığını ölçer"],
+    ["Stres Çıkışı", "stres koşullarında gerçekleşebilecek ilave nakit çıkışını tahmin eder"],
+    ["Tamponu", "beklenmeyen likidite ihtiyacı için tutulan kullanılabilir kaynağı ifade eder"],
+    ["Yoğunlaşma Riski", "fonlama kaynağının az sayıda karşı tarafa veya vadeye bağımlı olmasını anlatır"],
+    ["Erken Uyarı Göstergesi", "fonlama baskısı veya mevduat çıkışı riskini önceden izler"],
+    ["Limit Kullanımı", "likidite limitlerinin güncel kullanım seviyesini gösterir"],
+    ["Senaryo Analizi", "farklı çekilme ve piyasa kapanma varsayımlarını karşılaştırır"],
+    ["Raporlaması", "nakit pozisyonu ve likidite riskinin karar alıcıya düzenli sunumudur"],
+  ],
+  "Operasyonel Risk": [
+    ["Olayı", "süreç, insan, sistem veya dış kaynaklı hata sonucunda oluşan kayıtlı vakayı ifade eder"],
+    ["Kayıp Tutarı", "operasyonel olay nedeniyle gerçekleşen finansal zararı gösterir"],
+    ["Kök Neden Analizi", "olayın temel sebebini ve tekrarını önleyecek kontrol ihtiyacını araştırır"],
+    ["Kontrolü", "riski azaltmak için uygulanan prosedür, onay veya sistemsel kuralı ifade eder"],
+    ["KRI", "anahtar risk göstergesi olarak izlenen erken uyarı metriğidir"],
+    ["Aksiyon Planı", "bulgu veya olay sonrası alınacak düzeltici adımları tanımlar"],
+    ["Raporlaması", "olay, kayıp ve aksiyonların izlenebilir şekilde sunulmasını sağlar"],
+    ["Senaryo Analizi", "düşük olasılıklı ama yüksek etkili operasyonel olayları değerlendirir"],
+    ["İş Sürekliliği Testi", "kritik süreçlerin kesinti anında çalışabilirliğini sınar"],
+    ["Validasyonu", "kontrol tasarımının ve uygulama etkinliğinin bağımsız değerlendirmesidir"],
+  ],
+  "Sermaye ve Basel": [
+    ["Risk Ağırlığı", "maruz kalınan riskin sermaye hesabına yansıtılan ağırlığını gösterir"],
+    ["RWA", "sermaye yeterliliği hesabında kullanılan risk ağırlıklı varlık tutarını ifade eder"],
+    ["Sermaye Gereksinimi", "ilgili risk için tutulması gereken asgari düzenleyici sermayeyi anlatır"],
+    ["Sermaye Tamponu", "asgari gereksinimin üzerinde tutulan ilave dayanıklılık payıdır"],
+    ["Kaldıraç Etkisi", "varlık büyüklüğü ile sermaye arasındaki ilişkiyi takip eder"],
+    ["Standart Yaklaşımı", "düzenleyici risk ağırlıklarıyla sermaye hesabı yapılan yöntemi ifade eder"],
+    ["İçsel Model Yaklaşımı", "kurumun onaylı model girdileriyle sermaye hesabı yaptığı çerçevedir"],
+    ["Stres Testi", "sermaye oranının ağır senaryolarda nasıl değişeceğini ölçer"],
+    ["Raporlaması", "sermaye göstergelerinin düzenli ve karşılaştırılabilir sunumunu sağlar"],
+    ["Validasyonu", "sermaye hesabında kullanılan veri, model ve varsayımları kontrol eder"],
+  ],
+  "Muhasebe ve Raporlama": [
+    ["Kaydı", "ilgili finansal olayın muhasebe sistemine alınmasını ifade eder"],
+    ["Sınıflandırması", "finansal varlık veya borcun ölçüm ve raporlama kategorisini belirler"],
+    ["Ölçümü", "kalemin hangi değerleme yöntemiyle finansal tablolara yansıtılacağını anlatır"],
+    ["Mutabakatı", "farklı sistem veya raporlar arasındaki tutar uyumunun kontrolüdür"],
+    ["Dipnot Açıklaması", "finansal tablo kullanıcısına ek bilgi sağlayan açıklama alanıdır"],
+    ["Karşılık Etkisi", "değer düşüklüğü veya beklenen zarar nedeniyle gider yazılan tutarı gösterir"],
+    ["Dönemsel Değişimi", "raporlama dönemleri arasındaki artış veya azalışı analiz eder"],
+    ["Kontrolü", "raporlama verisinin doğruluğunu ve tamamlığını test eder"],
+    ["Raporlaması", "finansal bilginin yönetim, denetim veya düzenleyici otoriteye sunumudur"],
+  ],
+  "Finansal Piyasalar": [
+    ["Getirisi", "ilgili aracın yatırımcıya sağladığı dönemsel kazanç veya kaybı gösterir"],
+    ["Fiyatlaması", "nakit akımı, faiz, risk primi ve piyasa beklentileriyle değer belirleme sürecidir"],
+    ["Likiditesi", "aracın değer kaybetmeden hızlı alınıp satılabilme kabiliyetini ifade eder"],
+    ["Volatilitesi", "fiyat veya getiri oynaklığının büyüklüğünü gösterir"],
+    ["Spread'i", "alış-satış, kredi veya getiri farkını ifade eder"],
+    ["Vadesi", "anapara veya sözleşme yükümlülüğünün sona ereceği tarihi gösterir"],
+    ["İhraç Süreci", "finansal aracın piyasaya sunulması için yürütülen işlemleri anlatır"],
+    ["İşlem Hacmi", "belirli dönemde alınıp satılan toplam miktarı gösterir"],
+    ["Piyasa Riski", "fiyat, faiz, kur veya spread değişiminden kaynaklanan zarar ihtimalini anlatır"],
+  ],
+  "Ödeme Sistemleri": [
+    ["İşlemi", "para transferi veya ödeme talimatının gerçekleşen tekil kaydını ifade eder"],
+    ["Mutabakatı", "ödeme kayıtlarının banka, üye işyeri veya sistem kayıtlarıyla eşleştirilmesidir"],
+    ["İşlem Hacmi", "belirli dönemde gerçekleşen ödeme adedi veya tutarını gösterir"],
+    ["Başarı Oranı", "başarılı tamamlanan işlemlerin toplam denemelere oranını verir"],
+    ["Geri Ödeme Süreci", "iptal, iade veya düzeltme işlemlerinin yürütülmesini anlatır"],
+    ["Ters İbraz Riski", "kartlı işlemde itiraz nedeniyle tutarın geri alınması ihtimalidir"],
+    ["Fraud Kontrolü", "yetkisiz veya şüpheli ödeme davranışlarını tespit etmeye çalışır"],
+    ["Güvenlik Standardı", "işlemlerde kimlik doğrulama ve veri koruma gerekliliklerini ifade eder"],
+    ["Raporlaması", "ödeme performansı, hata ve mutabakat sonuçlarının düzenli sunumudur"],
+  ],
+  "Regülasyon ve Uyum": [
+    ["Kontrolü", "uyum gerekliliğinin uygulanıp uygulanmadığını test eden adımdır"],
+    ["Riski", "mevzuat, yaptırım veya kurum içi kurallara aykırılık nedeniyle doğabilecek risktir"],
+    ["İzleme Süreci", "işlem, müşteri veya veri davranışlarının düzenli takip edilmesini sağlar"],
+    ["Prosedürü", "ilgili uyum gerekliliğinin kurum içinde nasıl uygulanacağını tanımlar"],
+    ["Raporlaması", "uyum bulguları ve göstergelerinin ilgili taraflara sunumudur"],
+  ],
+  "Kurumsal Finans": [
+    ["Analizi", "şirketin finansal performansını ve değer yaratma kapasitesini değerlendirir"],
+    ["Marjı", "gelirden maliyet veya gider sonrası kalan kârlılık payını gösterir"],
+    ["Çarpanı", "değerleme veya karşılaştırma için kullanılan piyasa oranını ifade eder"],
+    ["Nakit Akımı", "şirketin faaliyet, yatırım veya finansman kaynaklı nakit hareketini gösterir"],
+    ["Borçluluk Oranı", "finansman yapısında borcun ağırlığını ölçer"],
+    ["Değerlemesi", "şirket veya varlığın ekonomik değerini tahmin etme çalışmasıdır"],
+    ["Finansman Maliyeti", "borç veya özkaynak kullanımının şirkete olan maliyetini anlatır"],
+    ["Duyarlılık Analizi", "varsayım değişikliklerinin değer veya kârlılık üzerindeki etkisini ölçer"],
+    ["Raporlaması", "finansal performansın yönetim kararları için sunulmasını sağlar"],
+  ],
+};
 
 const marketConcepts = [
   "Açığa Satış",
@@ -336,6 +482,21 @@ const normalise = (value) =>
 const firstLetter = (term) => term.trim().charAt(0).toLocaleUpperCase("tr-TR");
 
 function sentenceForSourceTerm(term) {
+  if (term.includes("API")) {
+    return `${term}, finansal kurumlar ile yetkili uygulamalar arasında kontrollü veri alışverişi veya işlem başlatma için kullanılan arayüz, dokümantasyon ya da güvenlik bileşenidir. Açık bankacılıkta erişim yetkisi, kimlik doğrulama, izleme ve teknik standartlarla birlikte değerlendirilir.`;
+  }
+  if (term.includes("Kimlik") || term.includes("KYC") || term.includes("Yetkilendirme") || term.includes("Şifreleme")) {
+    return `${term}, dijital finansal hizmetlerde müşterinin veya sistemin güvenli biçimde tanınması, erişim hakkının sınırlandırılması ve hassas verinin korunması için kullanılan güvenlik kavramıdır. Uyum, bilgi güvenliği ve operasyon ekipleri açısından kritik kontrol alanıdır.`;
+  }
+  if (term.includes("Ödeme") || term.includes("POS") || term.includes("Kart") || term.includes("Cüzdan")) {
+    return `${term}, para transferi, kartlı işlem, dijital cüzdan veya ödeme kabul süreçlerinde kullanılan ürün ya da altyapı kavramıdır. İşlem güvenliği, mutabakat, müşteri deneyimi ve düzenleyici uyum boyutlarıyla birlikte izlenir.`;
+  }
+  if (term.includes("Veri") || term.includes("Gizlilik") || term.includes("İzin")) {
+    return `${term}, müşteri veya işlem verisinin hangi kapsamda toplandığını, işlendiğini, saklandığını ya da paylaşıldığını anlatan veri yönetişimi kavramıdır. Finansal hizmetlerde açık rıza, erişim kontrolü ve mevzuata uyumla birlikte ele alınır.`;
+  }
+  if (term.includes("Bankacılık") || term.includes("Finans") || term.includes("FinTech") || term.includes("PSD2")) {
+    return `${term}, finansal hizmetlerin dijital kanallar, açık veri paylaşımı ve teknoloji tabanlı ürünlerle sunulmasını anlatan temel kavramdır. Rekabet, inovasyon, güvenli ödeme ve müşteri verisi koruması bu başlığın ana bileşenleridir.`;
+  }
   return `${term}, dijital finans ve bankacılık süreçlerinde veri paylaşımı, güvenli işlem, müşteri deneyimi veya sistem entegrasyonu tarafında kullanılan temel bir kavramdır. Operasyon, uyum ve ürün ekipleri bu başlığı hizmet kalitesi, erişim güvenliği ve süreç verimliliği açısından izler.`;
 }
 
@@ -356,14 +517,15 @@ function buildGlossary() {
   });
 
   Object.entries(domainGroups).forEach(([category, domains]) => {
+    const templates = categoryMetricTemplates[category] ?? [];
     domains.forEach((domain) => {
-      metricTemplates.forEach(([suffix, text]) => {
-        const term = `${domain} ${suffix}`;
+      templates.forEach(([suffix, text]) => {
+        const term = domain.endsWith(suffix) ? domain : `${domain} ${suffix}`;
         items.push({
           term,
           category,
-          description: `${term}, ${domain.toLocaleLowerCase("tr-TR")} kapsamında ${text}. Karar alma, limit yönetimi, performans takibi ve düzenli raporlama süreçlerinde kullanılır.`,
-          source: "Profesyonel sözlük seti",
+          description: `${term}, ${domain.toLocaleLowerCase("tr-TR")} kapsamında ${text}. Bu kavram yönetim raporlaması, limit takibi, kontrol çalışmaları veya karar destek analizlerinde bağlama göre kullanılır.`,
+          source: "Kontrol edilmiş editoryal set",
         });
       });
     });
@@ -461,7 +623,10 @@ function renderTerms() {
           <h3>${item.term}</h3>
           <p>${item.description}</p>
           <div class="term-footer">
-            <span class="term-category">${item.category}</span>
+            <span>
+              <span class="term-category">${item.category}</span>
+              <span class="term-source">${item.source}</span>
+            </span>
             <span class="term-letter">${firstLetter(item.term)}</span>
           </div>
         </article>
