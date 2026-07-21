@@ -9,7 +9,7 @@ Mobil uyumlu statik finansal sözlük uygulaması.
 - Harf filtresi
 - Kategori filtresi
 - Mobil uyumlu beyaz tema
-- Doğruluk kontrolü ve kapsam bölümü
+- Her terim kartında kaynak bağlantısı
 
 ## Yerelde Çalıştırma
 

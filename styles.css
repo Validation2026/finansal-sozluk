@@ -151,8 +151,7 @@ h2 {
   letter-spacing: 0;
 }
 
-.hero-copy p,
-.quality-section p {
+.hero-copy p {
   max-width: 720px;
   color: var(--muted);
   font-size: 18px;
@@ -217,8 +216,7 @@ h2 {
 .mini-preview,
 .search-card,
 .term-card,
-.category-card,
-.quality-card {
+.category-card {
   background: rgba(255, 255, 255, 0.92);
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -228,11 +226,6 @@ h2 {
 .stat-card {
   min-height: 150px;
   padding: 24px;
-}
-
-.verified-card {
-  grid-column: 1 / -1;
-  min-height: 112px;
 }
 
 .stat-card span {
@@ -259,14 +252,13 @@ h2 {
 }
 
 .mini-preview p {
-  margin-bottom: 0;
+  margin-bottom: 12px;
   color: var(--muted);
   line-height: 1.6;
 }
 
 .search-section,
-.category-section,
-.quality-section {
+.category-section {
   padding: 48px 0;
 }
 
@@ -403,7 +395,37 @@ select {
   font-weight: 800;
 }
 
+.term-meta {
+  min-width: 0;
+}
+
+.term-category,
+.term-source,
+.featured-source {
+  display: block;
+}
+
+.term-source,
+.featured-source {
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 6px;
+  overflow: hidden;
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.term-source:hover,
+.featured-source:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
 .term-letter {
+  flex: 0 0 auto;
   display: inline-grid;
   width: 30px;
   height: 30px;
@@ -442,34 +464,6 @@ select {
   font-weight: 800;
 }
 
-.quality-section {
-  margin-bottom: 60px;
-}
-
-.quality-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
-}
-
-.quality-card {
-  padding: 20px;
-  box-shadow: none;
-}
-
-.quality-card strong {
-  display: block;
-  margin-bottom: 10px;
-  font-size: 16px;
-}
-
-.quality-card p {
-  margin-bottom: 0;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.6;
-}
-
 @media (max-width: 920px) {
   .hero {
     grid-template-columns: 1fr;
@@ -487,8 +481,7 @@ select {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .category-grid,
-  .quality-grid {
+  .category-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -510,15 +503,13 @@ select {
     font-size: 42px;
   }
 
-  .hero-copy p,
-  .quality-section p {
+  .hero-copy p {
     font-size: 16px;
   }
 
   .hero-panel,
   .terms-grid,
-  .category-grid,
-  .quality-grid {
+  .category-grid {
     grid-template-columns: 1fr;
   }
 
