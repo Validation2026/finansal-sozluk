@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Bankacılık, risk yönetimi, finansal piyasalar, açık bankacılık ve fintech terimlerini aramak için modern finansal sözlük uygulaması."
+    />
+    <title>Finansal Sözlük</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar" aria-label="Üst menü">
+        <a class="brand" href="#top" aria-label="Finansal Sözlük ana sayfa">
+          <span class="brand-mark">FS</span>
+          <span>
+            <strong>Finansal Sözlük</strong>
+            <small>Bankacılık ve risk terimleri</small>
+          </span>
+        </a>
+        <nav class="nav-links" aria-label="Sayfa içi bağlantılar">
+          <a href="#sozluk">Sözlük</a>
+          <a href="#kategoriler">Kategoriler</a>
+          <a href="#github">GitHub / Netlify</a>
+        </nav>
+      </header>
+
+      <main id="top">
+        <section class="hero" aria-labelledby="hero-title">
+          <div class="hero-copy">
+            <span class="eyebrow">1000+ maddelik profesyonel kaynak</span>
+            <h1 id="hero-title">Finans terimini yaz, sade açıklamasını anında bul.</h1>
+            <p>
+              Bankacılık, kredi riski, piyasa riski, likidite, muhasebe, regülasyon,
+              ödeme sistemleri ve fintech başlıklarını tek, hızlı ve mobil uyumlu bir
+              sözlükte topladık.
+            </p>
+            <div class="hero-actions">
+              <a class="button primary" href="#sozluk">Sözlüğe Başla</a>
+              <button class="button ghost" id="randomTermButton" type="button">
+                Rastgele Terim
+              </button>
+            </div>
+          </div>
+
+          <aside class="hero-panel" aria-label="Sözlük özeti">
+            <div class="stat-card">
+              <span id="totalTerms">0</span>
+              <small>terim</small>
+            </div>
+            <div class="stat-card">
+              <span id="totalCategories">0</span>
+              <small>kategori</small>
+            </div>
+            <div class="mini-preview" id="featuredTerm" aria-live="polite"></div>
+          </aside>
+        </section>
+
+        <section class="search-section" id="sozluk" aria-labelledby="search-title">
+          <div class="section-heading">
+            <span class="eyebrow">Hızlı arama</span>
+            <h2 id="search-title">Terim, kategori veya açıklama içinde ara</h2>
+          </div>
+
+          <div class="search-card">
+            <label class="search-box" for="searchInput">
+              <span aria-hidden="true">⌕</span>
+              <input
+                id="searchInput"
+                type="search"
+                placeholder="Örn: ECL, temerrüt, açık bankacılık, likidite..."
+                autocomplete="off"
+              />
+            </label>
+
+            <div class="filter-row" aria-label="Filtreler">
+              <select id="categoryFilter" aria-label="Kategori filtresi"></select>
+              <select id="sortFilter" aria-label="Sıralama">
+                <option value="az">A-Z sırala</option>
+                <option value="za">Z-A sırala</option>
+                <option value="short">Kısa açıklamalar</option>
+                <option value="long">Detaylı açıklamalar</option>
+              </select>
+              <button class="button soft" id="clearButton" type="button">Temizle</button>
+            </div>
+
+            <div class="alphabet" id="alphabetFilter" aria-label="Harf filtresi"></div>
+          </div>
+
+          <div class="results-meta">
+            <p id="resultCount" aria-live="polite">Sonuçlar hazırlanıyor...</p>
+            <p class="source-note">
+              Başlangıç kapsamı Finstant finansal sözlük sayfasındaki açık bankacılık ve
+              fintech maddelerinden ilham alınarak genişletilmiştir.
+            </p>
+          </div>
+
+          <div class="terms-grid" id="termsGrid"></div>
+          <button class="button load-more" id="loadMoreButton" type="button">
+            Daha Fazla Göster
+          </button>
+        </section>
+
+        <section class="category-section" id="kategoriler" aria-labelledby="category-title">
+          <div class="section-heading">
+            <span class="eyebrow">Kapsam</span>
+            <h2 id="category-title">Sözlük hangi alanları kapsıyor?</h2>
+          </div>
+          <div class="category-grid" id="categoryGrid"></div>
+        </section>
+
+        <section class="publish-section" id="github" aria-labelledby="publish-title">
+          <div>
+            <span class="eyebrow">Yayınlama</span>
+            <h2 id="publish-title">GitHub ile Netlify’a bağlamaya hazır</h2>
+            <p>
+              Proje statik dosyalardan oluşur. GitHub reposuna yükleyip Netlify’da
+              “New site from Git” seçersen build komutu gerekmeden yayınlanır.
+            </p>
+          </div>
+          <ol class="publish-steps">
+            <li>GitHub’da yeni repo oluştur.</li>
+            <li>Bu klasördeki dosyaları repoya yükle.</li>
+            <li>Netlify’da repoyu seç, publish directory olarak <code>.</code> bırak.</li>
+          </ol>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>
