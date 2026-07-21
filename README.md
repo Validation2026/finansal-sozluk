@@ -1,22 +1,14 @@
-# Finansal Sözlük
+[build]
+  publish = "."
 
-Mobil uyumlu statik finansal sözlük uygulaması.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
 
-## İçerik
-
-- 1000+ finans, bankacılık, risk yönetimi, regülasyon ve fintech terimi
-- Canlı arama
-- Harf filtresi
-- Kategori filtresi
-- Mobil uyumlu beyaz tema
-- Doğruluk kontrolü ve kapsam bölümü
-
-## Yerelde Çalıştırma
-
-```bash
-npx serve .
-```
-
-## Kaynak Notu
-
-Başlangıç kapsamı Finstant finansal sözlük sayfasındaki açık bankacılık ve fintech maddelerinden ilham alınarak genişletilmiştir. Açıklamalar IFRS 9, Basel sermaye-likidite çerçevesi, FATF AML/KYC yaklaşımı ve PSD2/açık bankacılık bağlamı dikkate alınarak sadeleştirilmiştir. Genel bilgilendirme amaçlıdır; yatırım, hukuk veya muhasebe tavsiyesi değildir.
+[[headers]]
+  for = "/src/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
