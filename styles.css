@@ -152,7 +152,7 @@ h2 {
 }
 
 .hero-copy p,
-.publish-section p {
+.quality-section p {
   max-width: 720px;
   color: var(--muted);
   font-size: 18px;
@@ -218,7 +218,7 @@ h2 {
 .search-card,
 .term-card,
 .category-card,
-.publish-section {
+.quality-card {
   background: rgba(255, 255, 255, 0.92);
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -228,6 +228,11 @@ h2 {
 .stat-card {
   min-height: 150px;
   padding: 24px;
+}
+
+.verified-card {
+  grid-column: 1 / -1;
+  min-height: 112px;
 }
 
 .stat-card span {
@@ -261,7 +266,7 @@ h2 {
 
 .search-section,
 .category-section,
-.publish-section {
+.quality-section {
   padding: 48px 0;
 }
 
@@ -398,6 +403,18 @@ select {
   font-weight: 800;
 }
 
+.term-category,
+.term-source {
+  display: block;
+}
+
+.term-source {
+  margin-top: 4px;
+  color: #94a3b8;
+  font-size: 11px;
+  font-weight: 700;
+}
+
 .term-letter {
   display: inline-grid;
   width: 30px;
@@ -437,31 +454,36 @@ select {
   font-weight: 800;
 }
 
-.publish-section {
+.quality-section {
+  margin-bottom: 60px;
+}
+
+.quality-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.8fr);
-  gap: 24px;
-  margin: 24px 0 60px;
-  padding: 28px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
 }
 
-.publish-steps {
-  margin: 0;
-  padding-left: 22px;
-  color: #334155;
-  line-height: 1.9;
-  font-weight: 600;
+.quality-card {
+  padding: 20px;
+  box-shadow: none;
 }
 
-code {
-  padding: 2px 6px;
-  background: var(--primary-soft);
-  border-radius: 6px;
+.quality-card strong {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.quality-card p {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 @media (max-width: 920px) {
-  .hero,
-  .publish-section {
+  .hero {
     grid-template-columns: 1fr;
   }
 
@@ -477,7 +499,8 @@ code {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .category-grid {
+  .category-grid,
+  .quality-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -500,13 +523,14 @@ code {
   }
 
   .hero-copy p,
-  .publish-section p {
+  .quality-section p {
     font-size: 16px;
   }
 
   .hero-panel,
   .terms-grid,
-  .category-grid {
+  .category-grid,
+  .quality-grid {
     grid-template-columns: 1fr;
   }
 
