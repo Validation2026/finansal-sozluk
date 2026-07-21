@@ -77,6 +77,37 @@ const categories = [
   "Kurumsal Finans",
 ];
 
+const referenceSources = {
+  basel: {
+    label: "Basel Framework",
+    url: "https://www.bis.org/basel_framework/",
+  },
+  bddk: {
+    label: "BDDK Mevzuat",
+    url: "https://www.bddk.gov.tr/Mevzuat/Liste/132",
+  },
+  ecb: {
+    label: "ECB PSD2",
+    url: "https://www.ecb.europa.eu/press/intro/mip-online/2018/html/1803_revisedpsd.en.html",
+  },
+  fatf: {
+    label: "FATF Recommendations",
+    url: "https://www.fatf-gafi.org/en/publications/Fatfrecommendations/Fatf-recommendations.html",
+  },
+  finstant: {
+    label: "Finstant Finansal Sözlük",
+    url: "https://www.finstant.com.tr/finansal-sozluk",
+  },
+  ifrs: {
+    label: "IFRS Foundation",
+    url: "https://www.ifrs.org/",
+  },
+  tcmb: {
+    label: "TCMB Terimler Sözlüğü",
+    url: "https://www.tcmb.gov.tr/wps/wcm/connect/tr/tcmb%2Btr/main%2Bmenu/banka%2Bhakkinda/egitim-akademik/terimler%2Bsozlugu/",
+  },
+};
+
 const curatedTerms = [
   ["Beklenen Kredi Zararı", "Kredi Riski", "Bir kredi portföyünde temerrüt olasılığı, temerrüt anındaki bakiye ve kayıp oranı birlikte dikkate alınarak hesaplanan tahmini zarar tutarıdır."],
   ["PD", "Kredi Riski", "Probability of Default ifadesinin kısaltmasıdır; borçlunun belirli bir zaman ufkunda temerrüde düşme olasılığını gösterir."],
@@ -481,6 +512,20 @@ const normalise = (value) =>
 
 const firstLetter = (term) => term.trim().charAt(0).toLocaleUpperCase("tr-TR");
 
+function sourceForItem(item) {
+  const term = item.term.toLocaleUpperCase("tr-TR");
+
+  if (sourceInspiredTerms.includes(item.term)) return referenceSources.finstant;
+  if (["AML", "KYC"].includes(term) || item.category === "Regülasyon ve Uyum") return referenceSources.fatf;
+  if (item.category === "Muhasebe ve Raporlama" || ["PD", "LGD", "EAD"].includes(term) || item.term.includes("ECL")) {
+    return referenceSources.ifrs;
+  }
+  if (item.category === "Açık Bankacılık ve FinTech" || item.category === "Ödeme Sistemleri") return referenceSources.ecb;
+  if (item.category === "Bankacılık Ürünleri") return referenceSources.bddk;
+  if (item.category === "Finansal Piyasalar" || item.category === "Kurumsal Finans") return referenceSources.tcmb;
+  return referenceSources.basel;
+}
+
 function sentenceForSourceTerm(term) {
   if (term.includes("API")) {
     return `${term}, finansal kurumlar ile yetkili uygulamalar arasında kontrollü veri alışverişi veya işlem başlatma için kullanılan arayüz, dokümantasyon ya da güvenlik bileşenidir. Açık bankacılıkta erişim yetkisi, kimlik doğrulama, izleme ve teknik standartlarla birlikte değerlendirilir.`;
@@ -548,6 +593,7 @@ function buildGlossary() {
       seen.add(key);
       return true;
     })
+    .map((item) => ({ ...item, source: sourceForItem(item) }))
     .sort((a, b) => a.term.localeCompare(b.term, "tr"));
 }
 
@@ -592,7 +638,7 @@ function renderSelects() {
 function getFilteredTerms() {
   const query = normalise(state.query.trim());
   let filtered = glossary.filter((item) => {
-    const text = normalise(`${item.term} ${item.category} ${item.description}`);
+    const text = normalise(`${item.term} ${item.category} ${item.description} ${item.source.label}`);
     const matchesQuery = !query || text.includes(query);
     const matchesCategory = state.category === "Tümü" || item.category === state.category;
     const matchesLetter = state.letter === "Tümü" || firstLetter(item.term) === state.letter;
@@ -620,7 +666,12 @@ function renderTerms() {
           <h3>${item.term}</h3>
           <p>${item.description}</p>
           <div class="term-footer">
-            <span class="term-category">${item.category}</span>
+            <span class="term-meta">
+              <span class="term-category">${item.category}</span>
+              <a class="term-source" href="${item.source.url}" target="_blank" rel="noreferrer">
+                Kaynak: ${item.source.label}
+              </a>
+            </span>
             <span class="term-letter">${firstLetter(item.term)}</span>
           </div>
         </article>
@@ -668,6 +719,9 @@ function showFeaturedTerm(item = glossary[0]) {
     <span class="eyebrow">Öne çıkan terim</span>
     <h3>${item.term}</h3>
     <p>${item.description}</p>
+    <a class="featured-source" href="${item.source.url}" target="_blank" rel="noreferrer">
+      Kaynak: ${item.source.label}
+    </a>
   `;
 }
 
