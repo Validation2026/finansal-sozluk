@@ -1,68 +1,4 @@
-const sourceInspiredTerms = [
-  "Açık Bankacılık",
-  "Açık Bankacılık Ekosistemi",
-  "Açık Bankacılık Platformu",
-  "Anlık Ödeme Hizmetleri",
-  "API",
-  "API Anahtarı",
-  "API Analitiği",
-  "API Bankacılığı",
-  "API Dokümantasyonu",
-  "API Entegrasyon Modelleri",
-  "API Güvenliği",
-  "API Yetkilendirme",
-  "Banka API Entegrasyonu",
-  "Banka Bilgi Güvenliği",
-  "Banka Hesabı Takibi",
-  "Banka Veri Paylaşımı",
-  "Blockchain Teknolojisi",
-  "Çift Faktörlü Kimlik Doğrulama",
-  "Çoklu Bankacılık",
-  "Dijital Bankacılık",
-  "Dijital Cüzdanlar",
-  "Dijital Finans",
-  "Dijital Kimlik Doğrulama",
-  "Dijital Ödeme Sistemleri",
-  "E-Ödeme",
-  "E-Para Kuruluşu",
-  "ERP Entegrasyonu",
-  "Fatura Ödeme Hizmetleri",
-  "Finansal Eğitim Uygulamaları",
-  "Finansal Entegrasyon",
-  "Finansal Teknoloji",
-  "Hesap Bilgisi Paylaşımı",
-  "İşlem API'ları",
-  "İzin Yönetimi",
-  "Katılım Bankacılığı",
-  "Kimlik Doğrulama",
-  "Kişisel Finans Yönetimi",
-  "Mali Veri Entegrasyonu",
-  "Mobil Bankacılık",
-  "Müşteri Bilgi Paylaşımı",
-  "Müşteri Kimlik Doğrulama",
-  "Ödeme Hizmet Sağlayıcıları",
-  "Online Banka Entegrasyonu",
-  "PSD2",
-  "Risk Yönetimi",
-  "Sanal Bankacılık",
-  "Sanal Kartlar",
-  "Şifreleme",
-  "Sınırlı Veri Erişimi",
-  "Şube Dışı Hizmetler",
-  "Üçüncü Taraf Hizmet Sağlayıcıları",
-  "Veri Analitiği",
-  "Veri Entegrasyonu",
-  "Veri Gizliliği",
-  "Veri Güvenliği",
-  "Veri Paylaşımı",
-  "Veri Sahipliği",
-  "Veri Şifreleme",
-  "Web Servisleri",
-  "Yetkilendirme",
-];
-
 const categories = [
-  "Açık Bankacılık ve FinTech",
   "Bankacılık Ürünleri",
   "Kredi Riski",
   "Risk Yönetimi",
@@ -78,33 +14,50 @@ const categories = [
 ];
 
 const referenceSources = {
-  basel: {
-    label: "Basel Framework",
-    url: "https://www.bis.org/basel_framework/",
+  baselCredit: {
+    label: "Basel Framework — Credit risk", url: "https://www.bis.org/basel_framework/chapter/CRE/20.htm",
   },
-  bddk: {
-    label: "BDDK Mevzuat",
-    url: "https://www.bddk.gov.tr/Mevzuat/Liste/132",
+  baselCapital: {
+    label: "Basel Framework — Capital ratios", url: "https://www.bis.org/basel_framework/chapter/CAP/10.htm",
   },
-  ecb: {
-    label: "ECB PSD2",
-    url: "https://www.ecb.europa.eu/press/intro/mip-online/2018/html/1803_revisedpsd.en.html",
+  baselLiquidity: {
+    label: "Basel Framework — Liquidity Coverage Ratio", url: "https://www.bis.org/basel_framework/chapter/LCR/10.htm",
   },
-  fatf: {
-    label: "FATF Recommendations",
-    url: "https://www.fatf-gafi.org/en/publications/Fatfrecommendations/Fatf-recommendations.html",
+  baselFunding: {
+    label: "Basel Framework — Net Stable Funding Ratio", url: "https://www.bis.org/basel_framework/chapter/NSF/10.htm",
   },
-  finstant: {
-    label: "Finstant Finansal Sözlük",
-    url: "https://www.finstant.com.tr/finansal-sozluk",
+  baselMarket: {
+    label: "Basel Framework — Market risk", url: "https://www.bis.org/basel_framework/chapter/MAR/10.htm",
   },
-  ifrs: {
-    label: "IFRS Foundation",
-    url: "https://www.ifrs.org/",
+  baselOperational: {
+    label: "Basel Framework — Operational risk", url: "https://www.bis.org/basel_framework/chapter/OPE/10.htm",
   },
-  tcmb: {
-    label: "TCMB Terimler Sözlüğü",
-    url: "https://www.tcmb.gov.tr/wps/wcm/connect/tr/tcmb%2Btr/main%2Bmenu/banka%2Bhakkinda/egitim-akademik/terimler%2Bsozlugu/",
+  baselStress: {
+    label: "Basel Committee — Principles for stress testing", url: "https://www.bis.org/publ/bcbs155.htm",
+  },
+  ifrs9: {
+    label: "IFRS 9 — Financial Instruments", url: "https://www.ifrs.org/issued-standards/list-of-standards/ifrs-9-financial-instruments/",
+  },
+  ifrsCashFlow: {
+    label: "IAS 7 — Statement of Cash Flows", url: "https://www.ifrs.org/issued-standards/list-of-standards/ias-7-statement-of-cash-flows/",
+  },
+  fatfCdd: {
+    label: "FATF Recommendation 10 — Customer due diligence", url: "https://www.fatf-gafi.org/en/publications/Fatfrecommendations/Fatf-recommendations.html",
+  },
+  fatfAml: {
+    label: "FATF Recommendations — AML/CFT standard", url: "https://www.fatf-gafi.org/en/publications/Fatfrecommendations/Fatf-recommendations.html",
+  },
+  spkInstruments: {
+    label: "SPK — Sermaye piyasası araçları", url: "https://spk.gov.tr/sayfa/alt-sayfa/sermaye-piyasasi-araclari",
+  },
+  tcmbGlossary: {
+    label: "TCMB — Terimler sözlüğü", url: "https://www.tcmb.gov.tr/wps/wcm/connect/TR/TCMB+TR/Main+Menu/Banka+Hakkinda/Egitim-Akademik/Terimler+Sozlugu/",
+  },
+  bddkRegulation: {
+    label: "BDDK — Bankaların Kredi İşlemlerine İlişkin Yönetmelik", url: "https://www.bddk.org.tr/Mevzuat/DokumanGetir/1047",
+  },
+  tcmbPayments: {
+    label: "TCMB — Ödeme sistemleri", url: "https://www.tcmb.gov.tr/wps/wcm/connect/TR/TCMB+TR/Main+Menu/Temel+Faaliyetler/Odeme+Sistemleri/",
   },
 };
 
@@ -113,9 +66,9 @@ const curatedTerms = [
   ["PD", "Kredi Riski", "Probability of Default ifadesinin kısaltmasıdır; borçlunun belirli bir zaman ufkunda temerrüde düşme olasılığını gösterir."],
   ["LGD", "Kredi Riski", "Loss Given Default ifadesinin kısaltmasıdır; temerrüt gerçekleştiğinde tahsil edilemeyen kısmın oransal karşılığını anlatır."],
   ["EAD", "Kredi Riski", "Exposure at Default ifadesinin kısaltmasıdır; borçlunun temerrüde düştüğü andaki beklenen risk bakiyesini ifade eder."],
-  ["Stage 1", "Muhasebe ve Raporlama", "IFRS 9 kapsamında kredi riskinde önemli artış görülmeyen finansal varlıkların izlendiği aşamadır."],
-  ["Stage 2", "Muhasebe ve Raporlama", "Kredi riskinde önemli artış bulunan fakat temerrüt oluşmamış finansal varlıkların izlendiği aşamadır."],
-  ["Stage 3", "Muhasebe ve Raporlama", "Temerrüt veya değer düşüklüğü göstergesi bulunan finansal varlıkların izlendiği aşamadır."],
+  ["Aşama 1", "Muhasebe ve Raporlama", "IFRS 9 kapsamında kredi riskinde önemli artış görülmeyen finansal varlıkların izlendiği aşamadır."],
+  ["Aşama 2", "Muhasebe ve Raporlama", "IFRS 9 kapsamında kredi riskinde önemli artış bulunan ancak kredi değer düşüklüğüne uğramamış finansal varlıkların izlendiği aşamadır."],
+  ["Aşama 3", "Muhasebe ve Raporlama", "IFRS 9 kapsamında kredi değer düşüklüğüne uğramış finansal varlıkların izlendiği aşamadır."],
   ["Tahsili Gecikmiş Alacak", "Kredi Riski", "Vadesinde ödenmeyen ve belirli gecikme gün sayılarına göre izlenen kredi veya alacak bakiyesidir."],
   ["Takipteki Alacak", "Kredi Riski", "Mevzuat veya kurum politikaları gereği yasal takip ya da yakın izleme sürecine alınmış alacakları ifade eder."],
   ["Risk Ağırlıklı Varlık", "Sermaye ve Basel", "Bir varlığın risk seviyesine göre ağırlıklandırılmış tutarıdır ve sermaye yeterliliği hesaplamalarında kullanılır."],
@@ -515,46 +468,23 @@ const firstLetter = (term) => term.trim().charAt(0).toLocaleUpperCase("tr-TR");
 function sourceForItem(item) {
   const term = item.term.toLocaleUpperCase("tr-TR");
 
-  if (sourceInspiredTerms.includes(item.term)) return referenceSources.finstant;
-  if (["AML", "KYC"].includes(term) || item.category === "Regülasyon ve Uyum") return referenceSources.fatf;
-  if (item.category === "Muhasebe ve Raporlama" || ["PD", "LGD", "EAD"].includes(term) || item.term.includes("ECL")) {
-    return referenceSources.ifrs;
-  }
-  if (item.category === "Açık Bankacılık ve FinTech" || item.category === "Ödeme Sistemleri") return referenceSources.ecb;
-  if (item.category === "Bankacılık Ürünleri") return referenceSources.bddk;
-  if (item.category === "Finansal Piyasalar" || item.category === "Kurumsal Finans") return referenceSources.tcmb;
-  return referenceSources.basel;
-}
-
-function sentenceForSourceTerm(term) {
-  if (term.includes("API")) {
-    return `${term}, finansal kurumlar ile yetkili uygulamalar arasında kontrollü veri alışverişi veya işlem başlatma için kullanılan arayüz, dokümantasyon ya da güvenlik bileşenidir. Açık bankacılıkta erişim yetkisi, kimlik doğrulama, izleme ve teknik standartlarla birlikte değerlendirilir.`;
-  }
-  if (term.includes("Kimlik") || term.includes("KYC") || term.includes("Yetkilendirme") || term.includes("Şifreleme")) {
-    return `${term}, dijital finansal hizmetlerde müşterinin veya sistemin güvenli biçimde tanınması, erişim hakkının sınırlandırılması ve hassas verinin korunması için kullanılan güvenlik kavramıdır. Uyum, bilgi güvenliği ve operasyon ekipleri açısından kritik kontrol alanıdır.`;
-  }
-  if (term.includes("Ödeme") || term.includes("POS") || term.includes("Kart") || term.includes("Cüzdan")) {
-    return `${term}, para transferi, kartlı işlem, dijital cüzdan veya ödeme kabul süreçlerinde kullanılan ürün ya da altyapı kavramıdır. İşlem güvenliği, mutabakat, müşteri deneyimi ve düzenleyici uyum boyutlarıyla birlikte izlenir.`;
-  }
-  if (term.includes("Veri") || term.includes("Gizlilik") || term.includes("İzin")) {
-    return `${term}, müşteri veya işlem verisinin hangi kapsamda toplandığını, işlendiğini, saklandığını ya da paylaşıldığını anlatan veri yönetişimi kavramıdır. Finansal hizmetlerde açık rıza, erişim kontrolü ve mevzuata uyumla birlikte ele alınır.`;
-  }
-  if (term.includes("Bankacılık") || term.includes("Finans") || term.includes("FinTech") || term.includes("PSD2")) {
-    return `${term}, finansal hizmetlerin dijital kanallar, açık veri paylaşımı ve teknoloji tabanlı ürünlerle sunulmasını anlatan temel kavramdır. Rekabet, inovasyon, güvenli ödeme ve müşteri verisi koruması bu başlığın ana bileşenleridir.`;
-  }
-  return `${term}, dijital finans ve bankacılık süreçlerinde veri paylaşımı, güvenli işlem, müşteri deneyimi veya sistem entegrasyonu tarafında kullanılan temel bir kavramdır. Operasyon, uyum ve ürün ekipleri bu başlığı hizmet kalitesi, erişim güvenliği ve süreç verimliliği açısından izler.`;
+  if (["AŞAMA 1", "AŞAMA 2", "AŞAMA 3", "BEKLENEN KREDİ ZARARI", "ECL"].includes(term)) return referenceSources.ifrs9;
+  if (item.category === "Regülasyon ve Uyum") return term.includes("MÜŞTERİ") || term.includes("KYC") ? referenceSources.fatfCdd : referenceSources.fatfAml;
+  if (item.category === "Muhasebe ve Raporlama") return term.includes("NAKİT AKIM") ? referenceSources.ifrsCashFlow : referenceSources.ifrs9;
+  if (item.category === "Kredi Riski" || ["PD", "LGD", "EAD"].includes(term)) return referenceSources.baselCredit;
+  if (item.category === "Likidite Riski") return term.includes("İSTİKRARLI FONLAMA") ? referenceSources.baselFunding : referenceSources.baselLiquidity;
+  if (item.category === "Piyasa Riski") return referenceSources.baselMarket;
+  if (item.category === "Operasyonel Risk") return referenceSources.baselOperational;
+  if (item.category === "Sermaye ve Basel") return referenceSources.baselCapital;
+  if (item.category === "Risk Yönetimi") return referenceSources.baselStress;
+  if (item.category === "Finansal Piyasalar") return referenceSources.spkInstruments;
+  if (item.category === "Ödeme Sistemleri") return referenceSources.tcmbPayments;
+  if (item.category === "Bankacılık Ürünleri") return referenceSources.bddkRegulation;
+  return referenceSources.tcmbGlossary;
 }
 
 function buildGlossary() {
   const items = [];
-
-  sourceInspiredTerms.forEach((term) => {
-    items.push({
-      term,
-      category: "Açık Bankacılık ve FinTech",
-      description: sentenceForSourceTerm(term),
-    });
-  });
 
   curatedTerms.forEach(([term, category, description]) => {
     items.push({ term, category, description });
