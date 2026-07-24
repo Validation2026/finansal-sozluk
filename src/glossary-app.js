@@ -48,7 +48,10 @@ const referenceSources = {
     label: "FATF Recommendations — AML/CFT standard", url: "https://www.fatf-gafi.org/en/publications/Fatfrecommendations/Fatf-recommendations.html",
   },
   spkInstruments: {
-    label: "SPK — Sermaye piyasası araçları", url: "https://spk.gov.tr/sayfa/alt-sayfa/sermaye-piyasasi-araclari",
+    label: "SPK — Sermaye piyasası araçları", url: "https://spk.gov.tr/data/61e34f9a1b41c61270320792/Sermaye%20Piyasas%C4%B1%20Ara%C3%A7lar%C4%B1.pdf",
+  },
+  spkFinancialReporting: {
+    label: "SPK — Finansal tablo ve dipnot formatları", url: "https://spk.gov.tr/data/61e87ab81b41c611a4c53a60/288e6d25b51e168f6c668560fc1f2b26.pdf",
   },
   tcmbGlossary: {
     label: "TCMB — Terimler sözlüğü", url: "https://www.tcmb.gov.tr/wps/wcm/connect/TR/TCMB+TR/Main+Menu/Banka+Hakkinda/Egitim-Akademik/Terimler+Sozlugu/",
@@ -471,12 +474,14 @@ function sourceForItem(item) {
   if (["AŞAMA 1", "AŞAMA 2", "AŞAMA 3", "BEKLENEN KREDİ ZARARI", "ECL"].includes(term)) return referenceSources.ifrs9;
   if (item.category === "Regülasyon ve Uyum") return term.includes("MÜŞTERİ") || term.includes("KYC") ? referenceSources.fatfCdd : referenceSources.fatfAml;
   if (item.category === "Muhasebe ve Raporlama") return term.includes("NAKİT AKIM") ? referenceSources.ifrsCashFlow : referenceSources.ifrs9;
+  if (item.category === "Kurumsal Finans") return referenceSources.spkFinancialReporting;
   if (item.category === "Kredi Riski" || ["PD", "LGD", "EAD"].includes(term)) return referenceSources.baselCredit;
   if (item.category === "Likidite Riski") return term.includes("İSTİKRARLI FONLAMA") ? referenceSources.baselFunding : referenceSources.baselLiquidity;
   if (item.category === "Piyasa Riski") return referenceSources.baselMarket;
   if (item.category === "Operasyonel Risk") return referenceSources.baselOperational;
   if (item.category === "Sermaye ve Basel") return referenceSources.baselCapital;
   if (item.category === "Risk Yönetimi") return referenceSources.baselStress;
+  if (["AÇIĞA SATIŞ", "MARJ ÇAĞRISI"].includes(term)) return referenceSources.tcmbGlossary;
   if (item.category === "Finansal Piyasalar") return referenceSources.spkInstruments;
   if (item.category === "Ödeme Sistemleri") return referenceSources.tcmbPayments;
   if (item.category === "Bankacılık Ürünleri") return referenceSources.bddkRegulation;
