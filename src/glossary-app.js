@@ -551,171 +551,43 @@ const totalCategories = document.querySelector("#totalCategories");
 const categoryGrid = document.querySelector("#categoryGrid");
 
 function renderSelects() {
-  const categoryOptions = ["Tümü", ...categories];
-  categoryFilter.innerHTML = categoryOptions
-    .map((category) => `<option value="${category}">${category}</option>`)
-    .join("");
-
-  const letters = ["Tümü", ..."ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ".split("")];
-  alphabetFilter.innerHTML = letters
-    .map(
-      (letter) =>
-        `<button type="button" data-letter="${letter}" class="${letter === state.letter ? "active" : ""}">${letter}</button>`,
-    )
-    .join("");
+  categoryFilter.innerHTML = ["Tümü", ...categories].map((category) => `<option value="${category}">${category}</option>`).join("");
+  const letters = ["Tümü", ...[...new Set(glossary.map((item) => firstLetter(item.term)))].sort((a, b) => a.localeCompare(b, "tr"))];
+  alphabetFilter.innerHTML = letters.map((letter) => `<button type="button" data-letter="${letter}" class="${letter === state.letter ? "active" : ""}">${letter}</button>`).join("");
 }
 
 function getFilteredTerms() {
   const query = normalise(state.query.trim());
-  let filtered = glossary.filter((item) => {
-    const text = normalise(`${item.term} ${item.category} ${item.description} ${item.source.label}`);
-    const matchesQuery = !query || text.includes(query);
-    const matchesCategory = state.category === "Tümü" || item.category === state.category;
-    const matchesLetter = state.letter === "Tümü" || firstLetter(item.term) === state.letter;
-    return matchesQuery && matchesCategory && matchesLetter;
-  });
-
-  filtered = filtered.sort((a, b) => {
-    if (state.sort === "za") return b.term.localeCompare(a.term, "tr");
-    if (state.sort === "short") return a.description.length - b.description.length;
-    if (state.sort === "long") return b.description.length - a.description.length;
-    return a.term.localeCompare(b.term, "tr");
-  });
-
-  return filtered;
+  return glossary.filter((item) => !query || normalise(`${item.term} ${item.category} ${item.description} ${item.source.label}`).includes(query))
+    .filter((item) => state.category === "Tümü" || item.category === state.category)
+    .filter((item) => state.letter === "Tümü" || firstLetter(item.term) === state.letter)
+    .sort((a, b) => state.sort === "za" ? b.term.localeCompare(a.term, "tr") : state.sort === "short" ? a.description.length - b.description.length : state.sort === "long" ? b.description.length - a.description.length : a.term.localeCompare(b.term, "tr"));
 }
 
 function renderTerms() {
   const filtered = getFilteredTerms();
   const visibleTerms = filtered.slice(0, state.visible);
-
-  termsGrid.innerHTML = visibleTerms
-    .map(
-      (item) => `
-        <article class="term-card">
-          <h3>${item.term}</h3>
-          <p>${item.description}</p>
-          <div class="term-footer">
-            <span class="term-meta">
-              <span class="term-category">${item.category}</span>
-              <a class="term-source" href="${item.source.url}" target="_blank" rel="noreferrer">
-                Kaynak: ${item.source.label}
-              </a>
-            </span>
-            <span class="term-letter">${firstLetter(item.term)}</span>
-          </div>
-        </article>
-      `,
-    )
-    .join("");
-
+  termsGrid.innerHTML = visibleTerms.map((item) => `<article class="term-card"><h3>${item.term}</h3><p>${item.description}</p><div class="term-footer"><span class="term-meta"><span class="term-category">${item.category}</span><a class="term-source" href="${item.source.url}" target="_blank" rel="noopener noreferrer">Kaynak: ${item.source.label}</a></span><span class="term-letter">${firstLetter(item.term)}</span></div></article>`).join("");
   resultCount.textContent = `${filtered.length.toLocaleString("tr-TR")} sonuç bulundu`;
   loadMoreButton.hidden = visibleTerms.length >= filtered.length;
-
-  if (!visibleTerms.length) {
-    termsGrid.innerHTML = `
-      <article class="term-card">
-        <h3>Sonuç bulunamadı</h3>
-        <p>Aramayı biraz kısaltmayı veya kategori filtresini temizlemeyi deneyebilirsin.</p>
-        <div class="term-footer">
-          <span class="term-category">Arama</span>
-          <span class="term-letter">?</span>
-        </div>
-      </article>
-    `;
-  }
+  if (!visibleTerms.length) termsGrid.innerHTML = '<article class="term-card"><h3>Sonuç bulunamadı</h3><p>Aramayı kısaltmayı veya kategori filtresini temizlemeyi deneyebilirsin.</p></article>';
 }
 
 function renderCategoryCards() {
-  const counts = categories.map((category) => ({
-    category,
-    count: glossary.filter((item) => item.category === category).length,
-  }));
-
-  categoryGrid.innerHTML = counts
-    .map(
-      ({ category, count }) => `
-        <article class="category-card">
-          <strong>${category}</strong>
-          <span>${count.toLocaleString("tr-TR")} terim</span>
-        </article>
-      `,
-    )
-    .join("");
+  categoryGrid.innerHTML = categories.map((category) => `<article class="category-card"><strong>${category}</strong><span>${glossary.filter((item) => item.category === category).length.toLocaleString("tr-TR")} terim</span></article>`).join("");
 }
-
-function showFeaturedTerm(item = glossary[0]) {
-  featuredTerm.innerHTML = `
-    <span class="eyebrow">Öne çıkan terim</span>
-    <h3>${item.term}</h3>
-    <p>${item.description}</p>
-    <a class="featured-source" href="${item.source.url}" target="_blank" rel="noreferrer">
-      Kaynak: ${item.source.label}
-    </a>
-  `;
-}
-
-function resetVisible() {
-  state.visible = 36;
-}
-
-searchInput.addEventListener("input", (event) => {
-  state.query = event.target.value;
-  resetVisible();
-  renderTerms();
-});
-
-categoryFilter.addEventListener("change", (event) => {
-  state.category = event.target.value;
-  resetVisible();
-  renderTerms();
-});
-
-sortFilter.addEventListener("change", (event) => {
-  state.sort = event.target.value;
-  renderTerms();
-});
-
-clearButton.addEventListener("click", () => {
-  state.query = "";
-  state.category = "Tümü";
-  state.letter = "Tümü";
-  state.sort = "az";
-  searchInput.value = "";
-  categoryFilter.value = "Tümü";
-  sortFilter.value = "az";
-  resetVisible();
-  renderSelects();
-  renderTerms();
-});
-
-alphabetFilter.addEventListener("click", (event) => {
-  const button = event.target.closest("button[data-letter]");
-  if (!button) return;
-  state.letter = button.dataset.letter;
-  resetVisible();
-  renderSelects();
-  renderTerms();
-});
-
-loadMoreButton.addEventListener("click", () => {
-  state.visible += 36;
-  renderTerms();
-});
-
-randomTermButton.addEventListener("click", () => {
-  const random = glossary[Math.floor(Math.random() * glossary.length)];
-  showFeaturedTerm(random);
-  state.query = random.term;
-  searchInput.value = random.term;
-  resetVisible();
-  renderTerms();
-  document.querySelector("#sozluk").scrollIntoView({ behavior: "smooth", block: "start" });
-});
-
+function showFeaturedTerm(item = glossary[0]) { featuredTerm.innerHTML = `<span class="eyebrow">Öne çıkan terim</span><h3>${item.term}</h3><p>${item.description}</p><a class="featured-source" href="${item.source.url}" target="_blank" rel="noopener noreferrer">Kaynak: ${item.source.label}</a>`; }
+function resetVisible() { state.visible = 36; }
+searchInput.addEventListener("input", (event) => { state.query = event.target.value; resetVisible(); renderTerms(); });
+categoryFilter.addEventListener("change", (event) => { state.category = event.target.value; resetVisible(); renderTerms(); });
+sortFilter.addEventListener("change", (event) => { state.sort = event.target.value; renderTerms(); });
+clearButton.addEventListener("click", () => { state.query = ""; state.category = "Tümü"; state.letter = "Tümü"; state.sort = "az"; searchInput.value = ""; categoryFilter.value = "Tümü"; sortFilter.value = "az"; resetVisible(); renderSelects(); renderTerms(); });
+alphabetFilter.addEventListener("click", (event) => { const button = event.target.closest("button[data-letter]"); if (!button) return; state.letter = button.dataset.letter; resetVisible(); renderSelects(); renderTerms(); });
+loadMoreButton.addEventListener("click", () => { state.visible += 36; renderTerms(); });
+randomTermButton.addEventListener("click", () => { showFeaturedTerm(glossary[Math.floor(Math.random() * glossary.length)]); });
 totalTerms.textContent = glossary.length.toLocaleString("tr-TR");
 totalCategories.textContent = categories.length.toLocaleString("tr-TR");
 renderSelects();
-renderCategoryCards();
-showFeaturedTerm(glossary.find((item) => item.term === "Beklenen Kredi Zararı"));
 renderTerms();
+renderCategoryCards();
+showFeaturedTerm();
