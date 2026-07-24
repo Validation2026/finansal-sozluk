@@ -1,15 +1,13 @@
 # Finansal Sözlük
 
-Mobil uyumlu statik finansal sözlük uygulaması.
+Mobil uyumlu, kaynak seçimi denetlenmiş statik finansal sözlük uygulaması.
 
-## İçerik
+## İçerik ilkesi
 
-- 1000+ finans, bankacılık, risk yönetimi, regülasyon ve fintech terimi
-- Canlı arama
-- Harf filtresi
-- Kategori filtresi
-- Mobil uyumlu beyaz tema
-- Her terim kartında kaynak bağlantısı
+- Yalnızca resmi standart koyucu veya düzenleyici kurum kaynakları kullanılır.
+- Her karttaki **Kaynak** bağlantısı, o terimin tanımını dayandırdığı belgeye özel olarak atanır.
+- Kaynak grupları: BIS Basel Framework, IFRS Foundation, FATF ve Sermaye Piyasası Kurulu.
+- Kaynağı terim düzeyinde doğrulanamayan, pazarlama niteliğindeki veya türetilmiş ifadeler sözlüğe alınmaz.
 
 ## Yerelde Çalıştırma
 
@@ -17,6 +15,6 @@ Mobil uyumlu statik finansal sözlük uygulaması.
 npx serve .
 ```
 
-## Kaynak Notu
+## Kapsam notu
 
-Başlangıç kapsamı Finstant finansal sözlük sayfasındaki açık bankacılık ve fintech maddelerinden ilham alınarak genişletilmiştir. Açıklamalar IFRS 9, Basel sermaye-likidite çerçevesi, FATF AML/KYC yaklaşımı ve PSD2/açık bankacılık bağlamı dikkate alınarak sadeleştirilmiştir. Genel bilgilendirme amaçlıdır; yatırım, hukuk veya muhasebe tavsiyesi değildir.
+Tanımlar eğitim ve genel bilgilendirme amaçlı sadeleştirmelerdir; yatırım, hukuk veya muhasebe tavsiyesi değildir. Standartların bağlayıcı metni için her karttaki resmi kaynak bağlantısını esas alın.
