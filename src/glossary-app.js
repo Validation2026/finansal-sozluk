@@ -50,8 +50,8 @@ const referenceSources = {
   spkInstruments: {
     label: "SPK — Sermaye piyasası araçları", url: "https://spk.gov.tr/data/61e34f9a1b41c61270320792/Sermaye%20Piyasas%C4%B1%20Ara%C3%A7lar%C4%B1.pdf",
   },
-  spkFinancialReporting: {
-    label: "SPK — Finansal tablo ve dipnot formatları", url: "https://spk.gov.tr/data/61e87ab81b41c611a4c53a60/288e6d25b51e168f6c668560fc1f2b26.pdf",
+  spkMevzuat: {
+    label: "SPK — Mevzuat sistemi", url: "https://mevzuat.spk.gov.tr/",
   },
   tcmbGlossary: {
     label: "TCMB — Terimler sözlüğü", url: "https://www.tcmb.gov.tr/wps/wcm/connect/TR/TCMB+TR/Main+Menu/Banka+Hakkinda/Egitim-Akademik/Terimler+Sozlugu/",
@@ -474,7 +474,7 @@ function sourceForItem(item) {
   if (["AŞAMA 1", "AŞAMA 2", "AŞAMA 3", "BEKLENEN KREDİ ZARARI", "ECL"].includes(term)) return referenceSources.ifrs9;
   if (item.category === "Regülasyon ve Uyum") return term.includes("MÜŞTERİ") || term.includes("KYC") ? referenceSources.fatfCdd : referenceSources.fatfAml;
   if (item.category === "Muhasebe ve Raporlama") return term.includes("NAKİT AKIM") ? referenceSources.ifrsCashFlow : referenceSources.ifrs9;
-  if (item.category === "Kurumsal Finans") return referenceSources.spkFinancialReporting;
+  if (item.category === "Kurumsal Finans") return null;
   if (item.category === "Kredi Riski" || ["PD", "LGD", "EAD"].includes(term)) return referenceSources.baselCredit;
   if (item.category === "Likidite Riski") return term.includes("İSTİKRARLI FONLAMA") ? referenceSources.baselFunding : referenceSources.baselLiquidity;
   if (item.category === "Piyasa Riski") return referenceSources.baselMarket;
@@ -563,7 +563,7 @@ function renderSelects() {
 
 function getFilteredTerms() {
   const query = normalise(state.query.trim());
-  return glossary.filter((item) => !query || normalise(`${item.term} ${item.category} ${item.description} ${item.source.label}`).includes(query))
+  return glossary.filter((item) => !query || normalise(`${item.term} ${item.category} ${item.description} ${item.source ? item.source.label : ""}`).includes(query))
     .filter((item) => state.category === "Tümü" || item.category === state.category)
     .filter((item) => state.letter === "Tümü" || firstLetter(item.term) === state.letter)
     .sort((a, b) => state.sort === "za" ? b.term.localeCompare(a.term, "tr") : state.sort === "short" ? a.description.length - b.description.length : state.sort === "long" ? b.description.length - a.description.length : a.term.localeCompare(b.term, "tr"));
@@ -572,7 +572,7 @@ function getFilteredTerms() {
 function renderTerms() {
   const filtered = getFilteredTerms();
   const visibleTerms = filtered.slice(0, state.visible);
-  termsGrid.innerHTML = visibleTerms.map((item) => `<article class="term-card"><h3>${item.term}</h3><p>${item.description}</p><div class="term-footer"><span class="term-meta"><span class="term-category">${item.category}</span><a class="term-source" href="${item.source.url}" target="_blank" rel="noopener noreferrer">Kaynak: ${item.source.label}</a></span><span class="term-letter">${firstLetter(item.term)}</span></div></article>`).join("");
+  termsGrid.innerHTML = visibleTerms.map((item) => `<article class="term-card"><h3>${item.term}</h3><p>${item.description}</p><div class="term-footer"><span class="term-meta"><span class="term-category">${item.category}</span>${item.source ? `<a class="term-source" href="${item.source.url}" target="_blank" rel="noopener noreferrer">Kaynak: ${item.source.label}</a>` : ""}</span><span class="term-letter">${firstLetter(item.term)}</span></div></article>`).join("");
   resultCount.textContent = `${filtered.length.toLocaleString("tr-TR")} sonuç bulundu`;
   loadMoreButton.hidden = visibleTerms.length >= filtered.length;
   if (!visibleTerms.length) termsGrid.innerHTML = '<article class="term-card"><h3>Sonuç bulunamadı</h3><p>Aramayı kısaltmayı veya kategori filtresini temizlemeyi deneyebilirsin.</p></article>';
@@ -581,7 +581,7 @@ function renderTerms() {
 function renderCategoryCards() {
   categoryGrid.innerHTML = categories.map((category) => `<article class="category-card"><strong>${category}</strong><span>${glossary.filter((item) => item.category === category).length.toLocaleString("tr-TR")} terim</span></article>`).join("");
 }
-function showFeaturedTerm(item = glossary[0]) { featuredTerm.innerHTML = `<span class="eyebrow">Öne çıkan terim</span><h3>${item.term}</h3><p>${item.description}</p><a class="featured-source" href="${item.source.url}" target="_blank" rel="noopener noreferrer">Kaynak: ${item.source.label}</a>`; }
+function showFeaturedTerm(item = glossary[0]) { featuredTerm.innerHTML = `<span class="eyebrow">Öne çıkan terim</span><h3>${item.term}</h3><p>${item.description}</p>${item.source ? `<a class="featured-source" href="${item.source.url}" target="_blank" rel="noopener noreferrer">Kaynak: ${item.source.label}</a>` : ""}`; }
 function resetVisible() { state.visible = 36; }
 searchInput.addEventListener("input", (event) => { state.query = event.target.value; resetVisible(); renderTerms(); });
 categoryFilter.addEventListener("change", (event) => { state.category = event.target.value; resetVisible(); renderTerms(); });
